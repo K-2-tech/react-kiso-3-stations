@@ -1,49 +1,39 @@
-import React, { useState } from "react";
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Outlet,
+  Navigate,
+} from "react-router-dom";
+import { useSelector } from "react-redux";
+import Signup from "./pages/Signup";
+import Login from "./pages/Login";
+import { NotFound } from "./pages/Notfound";
+import { Home } from "./pages/Home";
+import SetIcon from "./pages/Iconsetpage";
+const ProtectedRoutes = () => {
+  const auth = useSelector((state) => state.auth.isSignIn);
 
+  if (!auth) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return <Outlet />;
+};
 function App() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setError("正しいメールアドレスを入力してください");
-    } else {
-      setError("");
-      // ここでログイン処理を行う（今回は省略）
-    }
-  };
-
   return (
-    <div>
-      <h1>ログイン</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">メールアドレス：</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="password">パスワード：</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <button type="submit">ログイン</button>
-      </form>
-      {error && <p className="error-message">{error}</p>}
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+        <Route element={<ProtectedRoutes />}>
+          <Route path="/seticon" element={<SetIcon />} />
+          <Route path="/" element={<Home />} />
+        </Route>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Router>
   );
 }
 
