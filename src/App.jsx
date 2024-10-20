@@ -19,11 +19,11 @@ function App() {
   return (
     <div>
       <h1>ログイン</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} noValidate data-testid="login-form">
         <div>
           <label htmlFor="email">メールアドレス：</label>
           <input
-            type="email"
+            type="text"
             id="email"
             name="email"
             value={email}
