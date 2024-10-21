@@ -4,11 +4,18 @@ import { Link, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { useDispatch } from "react-redux";
+import { signIn } from "../authSlice";
 
 function Login() {
-  const [cookies, setCookie] = useCookies(["token"]);
+  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
+  //もしtokenがあったら、tokenを削除
+  if (cookies) {
+    removeCookie("token", { path: "/" });
+  }
   const url = "https://railway.bookreview.techtrain.dev";
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const initialValues = {
     email: "",
@@ -27,7 +34,7 @@ function Login() {
       .post(`${url}/signin`, values)
       .then((response) => {
         setCookie("token", response.data.token, { path: "/" });
-        console.log(response.data);
+        dispatch(signIn());
         navigate("/");
       })
       .catch((error) => {

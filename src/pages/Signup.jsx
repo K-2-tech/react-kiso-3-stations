@@ -7,8 +7,6 @@ import { useNavigate, Navigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import { signIn } from "../authSlice";
-
 const Signup = () => {
   const url = "https://railway.bookreview.techtrain.dev";
   const navigate = useNavigate();
@@ -39,7 +37,7 @@ const Signup = () => {
         const token = response.data.token;
         console.log(response.data);
         setCookie("token", token);
-        navigate("/signup/seticon");
+        navigate("/seticon");
       })
       .catch((error) => {
         setStatus(error.message);

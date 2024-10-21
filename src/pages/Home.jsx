@@ -1,20 +1,26 @@
 import { Link } from "react-router-dom";
 import Icon from "../components/Icon";
 import Bookslist from "../components/Bookslist";
+import ProtectedRoutes from "./ProtectedRoutes";
 import "./Home.css";
+
 export const Home = () => {
   return (
     <>
       <header className="header">
-        <p class="header__description">Homeだよ</p>
+        <p className="header__description">Homeだよ</p>
 
         <div className="header__setting">
-          <Icon />
-          <Link to="/seticon">アイコンを再設定</Link>
-          <br></br>
-          <Link to="login">サインアウト</Link>
+          <ProtectedRoutes>
+            <Icon />
+            <Link to="/profile">ユーザー情報編集</Link>
+            <Link to="/seticon">アイコン編集</Link>
+            <Link to="/new">書籍レビュー投稿</Link>
+            <Link to="/login">ログアウト</Link>
+          </ProtectedRoutes>
         </div>
       </header>
+
       <main className="bookslist">
         <Bookslist />
       </main>

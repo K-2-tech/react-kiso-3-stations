@@ -24,6 +24,16 @@ export const fetchBooks = createAsyncThunk(
   }
 );
 
+export const fetchPublicBooks = createAsyncThunk(
+  "books/fetchPublicBooks",
+  async ({ offset }) => {
+    const response = await axios.get(
+      `https://railway.bookreview.techtrain.dev/public/books?offset=${offset}`
+    );
+    return response.data;
+  }
+);
+
 const booksSlice = createSlice({
   name: "books",
   initialState,
@@ -47,10 +57,20 @@ const booksSlice = createSlice({
       .addCase(fetchBooks.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
+      })
+      .addCase(fetchPublicBooks.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchPublicBooks.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.books = action.payload;
+      })
+      .addCase(fetchPublicBooks.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
       });
   },
 });
 
 export const { incrementOffset, decrementOffset } = booksSlice.actions;
-
 export default booksSlice.reducer;
