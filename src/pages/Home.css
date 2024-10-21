@@ -1,0 +1,54 @@
+/* Block: header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: burlywood;
+  padding: 10px 20px;
+  border-bottom: 2px solid black;
+}
+
+/* Element: description */
+.header__description {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* Element: setting */
+.header__setting {
+  display: flex;
+  align-items: center;
+}
+
+/* Element: link */
+.header__setting a {
+  margin-left: 10px;
+  text-decoration: none;
+  color: #007bff;
+}
+
+/* Block: main-bookslist */
+.bookslist {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  display: flex;
+}
+
+.bookslist ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.bookslist li {
+  background-color: antiquewhite;
+  margin-bottom: 10px;
+  font-size: 18px;
+  width: 50vw;
+  text-align: center;
+  white-space: nowrap; /* 文字を1行に制限 */
+  overflow: hidden; /* 溢れた文字を隠す */
+  text-overflow: ellipsis; /* 溢れた部分を省略記号(...)で表示 */
+}
