@@ -2,18 +2,16 @@
 import React from "react";
 import axios from "axios";
 import { useCookies } from "react-cookie";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate, Navigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-
-import { signIn } from "../authSlice";
 
 const Signup = () => {
   const url = "https://railway.bookreview.techtrain.dev";
   const navigate = useNavigate();
   const auth = useSelector((state) => state.auth.isSignIn);
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
   const [cookies, setCookie, removeCookie] = useCookies();
 
   const initialValues = {
@@ -39,7 +37,7 @@ const Signup = () => {
         const token = response.data.token;
         console.log(response.data);
         setCookie("token", token);
-        navigate("/signup/seticon");
+        navigate("/seticon");
       })
       .catch((error) => {
         setStatus(error.message);

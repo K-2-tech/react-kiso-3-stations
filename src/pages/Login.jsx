@@ -4,12 +4,19 @@ import { Link, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { useDispatch } from "react-redux";
+import { signIn, signOut } from "../authSlice";
 
 function Login() {
-  const [cookies, setCookie] = useCookies(["token"]);
+  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const url = "https://railway.bookreview.techtrain.dev";
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
+  //もしtokenがあったら、tokenを削除、stateを更新
+  if (cookies.token) {
+    removeCookie("token", { path: "/" });
+    dispatch(signOut());
+  }
   const initialValues = {
     email: "",
     password: "",
@@ -27,7 +34,7 @@ function Login() {
       .post(`${url}/signin`, values)
       .then((response) => {
         setCookie("token", response.data.token, { path: "/" });
-        console.log(response.data);
+        dispatch(signIn());
         navigate("/");
       })
       .catch((error) => {
@@ -64,6 +71,8 @@ function Login() {
             <button type="submit" disabled={isSubmitting}>
               ログイン
             </button>
+            <br />
+            <Link to="/">ログインせずにホームへ</Link>
             {status && <div>{status}</div>}
           </Form>
         )}

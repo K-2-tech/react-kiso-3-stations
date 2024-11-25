@@ -2,13 +2,13 @@ import Compressor from "compressorjs";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useCookies } from "react-cookie";
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 const SetIcon = () => {
   const [cookies] = useCookies(["token"]);
   const navigate = useNavigate();
   const url = "https://railway.bookreview.techtrain.dev";
-  const [iconUrl, setIconUrl] = useState("");
+  //const [iconUrl, setIconUrl] = useState("");
 
   const handleImageUpload = (e) => {
     e.preventDefault();
@@ -43,7 +43,7 @@ const SetIcon = () => {
           .then((response) => {
             console.log(response.data);
             console.log("ok");
-            setIconUrl(response.data.iconUrl);
+            //setIconUrl(response.data.iconUrl);
             navigate("/");
           })
           .catch((error) => {
